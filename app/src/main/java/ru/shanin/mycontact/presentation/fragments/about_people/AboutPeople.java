@@ -1,7 +1,6 @@
 package ru.shanin.mycontact.presentation.fragments.about_people;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,10 +110,10 @@ public class AboutPeople extends Fragment {
         );
         ((ImageView) view.findViewById(R.id.photo))
                 .setImageResource(resID);
-        ((TextView) view.findViewById(R.id.tv_fn))
-                .setText(people.getPeopleInfo().getFirstName());
-        ((TextView) view.findViewById(R.id.tv_sn))
-                .setText(people.getPeopleInfo().getSecondName());
+        String ln = String.valueOf(people.getPeopleInfo().getLastName());
+        String fn_sn = people.getPeopleInfo().getFirstName() + " " + people.getPeopleInfo().getSecondName();
+        ((TextView) view.findViewById(R.id.tv_fn)).setText(ln);
+        ((TextView) view.findViewById(R.id.tv_sn)).setText(fn_sn);
         ((TextView) view.findViewById(R.id.tv_age))
                 .setText(String.valueOf(people.getPeopleInfo().getAge()));
         ((TextView) view.findViewById(R.id.tv_email))

@@ -13,7 +13,6 @@ import com.google.android.material.snackbar.Snackbar;
 import ru.shanin.mycontact.R;
 import ru.shanin.mycontact.domain.entity.People;
 
-
 public class Adapter
         extends ListAdapter<People, ViewHolder> {
 
@@ -62,8 +61,10 @@ public class Adapter
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         People people = getItem(position);
-        viewHolder.tvFirstName.setText(String.valueOf(people.getPeopleInfo().getFirstName()));
-        viewHolder.tvSecondName.setText(people.getPeopleInfo().getSecondName());
+        String ln = String.valueOf(people.getPeopleInfo().getLastName());
+        viewHolder.tvFirstName.setText(ln);
+        String fn_sn = people.getPeopleInfo().getFirstName() + " " + people.getPeopleInfo().getSecondName();
+        viewHolder.tvSecondName.setText(fn_sn);
         String mDrawableName = people.getPeopleInfo().getPathToPhoto();
         Context context = viewHolder.itemView.getContext();
         int resID = context.getResources().getIdentifier(

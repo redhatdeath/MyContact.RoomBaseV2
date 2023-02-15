@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">V2. My Contact Room Base</string>
+    <string name="add_10">Add 10</string>
+    <string name="profile_photo"> profile_photo </string>
+    <string name="first_name_hint"> Input first name </string>
+    <string name="second_name_hint"> Input second name </string>
+    <string name="first_name">first name</string>
+    <string name="second_name">second name</string>
+    <string name="age">age</string>
+    <string name="email">email</string>
+    <string name="phone">phone</string>
+    <string name="list_of_knowledge">listOfKnowledge</string>
+    <string name="people_s_photo">people\'s photo</string>
+</resources>

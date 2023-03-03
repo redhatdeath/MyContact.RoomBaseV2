@@ -8,13 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ListAdapter;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import ru.shanin.mycontact.R;
 import ru.shanin.mycontact.domain.entity.People;
 
-public class Adapter
-        extends ListAdapter<People, ViewHolder> {
+public class Adapter extends ListAdapter<People, ViewHolder> {
 
     public static final int MAX_POOL_SIZE = 10;
     public static final int VIEW_TYPE_PEOPLE_AGE_1 = 100;
@@ -24,6 +21,7 @@ public class Adapter
     public static final int VIEW_TYPE_PEOPLE_AGE_DEFAULT = 500;
 
     public OnPeopleClickListener peopleClickListener = null;
+    public OnPeopleLongClickListener peopleLongClickListener = null;
 
     public Adapter(DiffCallback diffCallback) {
         super(diffCallback);
@@ -52,9 +50,7 @@ public class Adapter
             default:
                 throw new RuntimeException("Unknown view type " + viewType);
         }
-        View view = LayoutInflater
-                .from(parent.getContext())
-                .inflate(layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -67,37 +63,34 @@ public class Adapter
         viewHolder.tvSecondName.setText(fn_sn);
         String mDrawableName = people.getPeopleInfo().getPathToPhoto();
         Context context = viewHolder.itemView.getContext();
-        int resID = context.getResources().getIdentifier(
-                mDrawableName,
-                "drawable",
-                context.getPackageName()
-        );
+        int resID = context.getResources().getIdentifier(mDrawableName, "drawable", context.getPackageName());
         viewHolder.imPhoto.setImageResource(resID);
-        viewHolder.itemView.setOnClickListener(
-                v -> {
-                    Snackbar.make(viewHolder.itemView,
-                            "people position = " + position + "\n" +
-                                    "people _id = " + people.getId(),
-                            Snackbar.LENGTH_LONG).show();
-                    peopleClickListener.onPeopleClick(getCurrentList().get(position));
-                });
+        viewHolder.itemView.setOnClickListener(v -> {
+            //Snackbar.make(viewHolder.itemView, "people position = " + position + "\n" + "people _id = " + people.getId(), Snackbar.LENGTH_LONG).show();
+            peopleClickListener.onPeopleClick(getCurrentList().get(position));
+        });
+        viewHolder.itemView.setOnLongClickListener(v -> {
+            //Snackbar.make(viewHolder.itemView, "people position = " + position + "\n" + "people _id = " + people.getId(), Snackbar.LENGTH_LONG).show();
+            peopleLongClickListener.onPeopleLongClick(getCurrentList().get(position));
+            return false;
+        });
     }
 
     @Override
     public int getItemViewType(int position) {
         People people = getItem(position);
-        if (people.getPeopleInfo().getAge() / 10 == 1)
-            return VIEW_TYPE_PEOPLE_AGE_1;
-        if (people.getPeopleInfo().getAge() / 10 == 2)
-            return VIEW_TYPE_PEOPLE_AGE_2;
-        if (people.getPeopleInfo().getAge() / 10 == 3)
-            return VIEW_TYPE_PEOPLE_AGE_3;
-        if (people.getPeopleInfo().getAge() / 10 == 4)
-            return VIEW_TYPE_PEOPLE_AGE_4;
+        if (people.getPeopleInfo().getAge() / 10 == 1) return VIEW_TYPE_PEOPLE_AGE_1;
+        if (people.getPeopleInfo().getAge() / 10 == 2) return VIEW_TYPE_PEOPLE_AGE_2;
+        if (people.getPeopleInfo().getAge() / 10 == 3) return VIEW_TYPE_PEOPLE_AGE_3;
+        if (people.getPeopleInfo().getAge() / 10 == 4) return VIEW_TYPE_PEOPLE_AGE_4;
         else return VIEW_TYPE_PEOPLE_AGE_DEFAULT;
     }
 
     interface OnPeopleClickListener {
         void onPeopleClick(People people);
+    }
+
+    interface OnPeopleLongClickListener {
+        void onPeopleLongClick(People people);
     }
 }

@@ -1,5 +1,6 @@
 package ru.shanin.mycontact.presentation.fragments.list_of_people;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +86,7 @@ public class ListOfPeople extends Fragment {
     private void initAdapter() {
         adapter = new Adapter(new DiffCallback());
         adapter.peopleClickListener = this::startAboutPeople;
+        adapter.peopleLongClickListener = this::newShare;
         initSwipe();
     }
 
@@ -177,5 +179,12 @@ public class ListOfPeople extends Fragment {
                     .addToBackStack("null")
                     .replace(R.id.container_about_people, fragment, null)
                     .commit();
+    }
+
+    private void newShare(People people) {
+        Intent intent = new Intent("android.intent.action.SEND");
+        intent.setType("plain/text");
+        intent.putExtra("android.intent.extra.TEXT", people.toString());
+        startActivity(Intent.createChooser(intent, "Поделится ^-^"));
     }
 }

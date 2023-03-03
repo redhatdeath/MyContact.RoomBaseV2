@@ -182,9 +182,9 @@ public class ListOfPeople extends Fragment {
     }
 
     private void newShare(People people) {
-        Intent intent = new Intent("android.intent.action.SEND");
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, people.toString());
         intent.setType("plain/text");
-        intent.putExtra("android.intent.extra.TEXT", people.toString());
         startActivity(Intent.createChooser(intent, "Поделится ^-^"));
     }
 }
